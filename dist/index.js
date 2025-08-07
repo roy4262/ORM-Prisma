@@ -1,5 +1,24 @@
+import express from "express";
 import { PrismaClient } from "@prisma/client"; //step 1
 const client = new PrismaClient(); // step 2
+const app = express();
+app.get("/api/user/:id", async (req, res) => {
+    const id = req.params.id;
+    const resp = await client.user.findFirst({
+        where: {
+            id: parseInt(id)
+        },
+        select: {
+            id: true,
+            username: true,
+            email: true
+        }
+    });
+    res.json({
+        data: resp
+    });
+});
+app.listen(3000);
 async function createUser() {
     await client.user.create({
         data: {
@@ -47,7 +66,7 @@ async function findUser() {
         }
     }).then((res) => console.log(res)).catch((err) => console.log(err));
 }
-findUser();
+// findUser();
 // updateTodo();
 // deleteUser();
 // createUser();
