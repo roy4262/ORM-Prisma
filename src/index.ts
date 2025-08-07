@@ -41,7 +41,22 @@ async function updateTodo() {
         }
     }).then((res)=>console.log(res)).catch((err)=>console.log(err));
 }
-updateTodo();
+
+async function findUser() {
+    client.user.findFirst({
+        where:{
+            id:4
+        },
+        select:{         //selecting only specific fileds (if not every thing will be selected)
+            id:true,
+            username:true,
+            email:true
+        }
+    }).then((res)=>console.log(res)).catch((err)=>console.log(err));
+    
+}
+findUser();
+// updateTodo();
 // deleteUser();
 // createUser();
 // createTodo();
